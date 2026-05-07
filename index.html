@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>KAIZYE XITERZ | PREMIUM FILE SHOP</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Poppins & Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #0a0f1e 0%, #0c1222 100%);
+      font-family: 'Inter', sans-serif;
+      color: #eef2ff;
+      overflow-x: hidden;
+    }
+
+    /* scroll smooth */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* container utama */
+    .app {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 1rem 1.5rem 3rem;
+    }
+
+    /* header dengan foto profil animasi lingkaran biru */
+    .store-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(59,130,246,0.3);
+    }
+
+    .logo-area h1 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.8rem;
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .logo-area p {
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    /* foto profil bulat dengan animasi berputar biru terang */
+    .profile-wrapper {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+    .profile-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 3px solid #1e293b;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.5);
+      transition: all 0.3s ease;
+    }
+    /* animasi melingkar (cincin biru berputar) */
+    .rotating-ring {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      right: -6px;
+      bottom: -6px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, #38bdf8, #3b82f6, #60a5fa, #38bdf8);
+      animation: spinRing 2.5s linear infinite;
+      z-index: -1;
+      opacity: 0.8;
+    }
+    @keyframes spinRing {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    /* efek inner glow */
+    .profile-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: #0f172a;
+      border-radius: 50%;
+      z-index: -1;
+    }
+
+    /* navigasi menu horizontal (terpisah) */
+    .nav-menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin: 1.5rem 0 2rem;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(12px);
+      padding: 0.8rem 1.2rem;
+      border-radius: 60px;
+      border: 1px solid rgba(59,130,246,0.3);
+    }
+    .nav-btn {
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      font-weight: 600;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.2s;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Inter', sans-serif;
+    }
+    .nav-btn i {
+      font-size: 1rem;
+    }
+    .nav-btn.active {
+      background: linear-gradient(95deg, #3b82f6, #2563eb);
+      color: white;
+      box-shadow: 0 6px 14px rgba(59,130,246,0.4);
+    }
+    .nav-btn:hover:not(.active) {
+      background: #1e293b;
+      color: white;
+    }
+
+    /* konten halaman terpisah (page container) */
+    .pages-container {
+      margin: 2rem 0;
+      min-height: 500px;
+    }
+    .page {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .page.active-page {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    /* grid produk */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .product-card {
+      background: #111827cc;
+      backdrop-filter: blur(4px);
+      border: 1px solid #1e293b;
+      border-radius: 28px;
+      padding: 1.2rem;
+      transition: all 0.25s;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-color: #3b82f6;
+      box-shadow: 0 20px 30px -12px #3b82f630;
+    }
+    .product-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      font-family: 'Poppins', sans-serif;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .price-old {
+      text-decoration: line-through;
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-right: 8px;
+    }
+    .price-new {
+      font-weight: 800;
+      color: #facc15;
+      font-size: 1.3rem;
+    }
+    .product-desc {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      margin: 0.8rem 0;
+    }
+    .order-btn {
+      background: linear-gradient(100deg, #3b82f6, #1d4ed8);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 40px;
+      font-weight: 600;
+      color: white;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 12px;
+      font-size: 0.9rem;
+    }
+    .order-btn:hover {
+      background: #2563eb;
+      transform: scale(0.98);
+    }
+
+    /* CHATBOX OTOMATIS */
+    .chat-section {
+      margin-top: 3rem;
+      background: #0f172a;
+      border-radius: 2rem;
+      padding: 1.5rem;
+      border: 1px solid #2d3a5e;
+    }
+    .chat-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chat-box {
+      background: #030712;
+      border-radius: 1.5rem;
+      padding: 1rem;
+      height: 220px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 1rem;
+    }
+    .message {
+      max-width: 85%;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+    .bot-msg {
+      background: #1e293b;
+      align-self: flex-start;
+      color: #e2e8f0;
+      border-bottom-left-radius: 4px;
+    }
+    .user-msg {
+      background: #3b82f6;
+      align-self: flex-end;
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .chat-input-area {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    #chatInput {
+      flex: 1;
+      background: #1e293b;
+      border: 1px solid #334155;
+      padding: 12px 16px;
+      border-radius: 40px;
+      color: white;
+      outline: none;
+    }
+    #sendChatBtn {
+      background: #3b82f6;
+      border: none;
+      width: 45px;
+      height: 45px;
+      border-radius: 45px;
+      color: white;
+      cursor: pointer;
+    }
+    .wa-badge {
+      background: #25D366;
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      margin-top: 6px;
+      text-decoration: none;
+      color: white;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.75rem;
+      color: #5b6e8c;
+    }
+    @media (max-width: 640px) {
+      .app { padding: 0.8rem; }
+      .nav-menu { border-radius: 30px; gap: 4px; }
+      .nav-btn { padding: 0.4rem 1rem; font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <!-- header dengan foto profil animasi lingkaran biru -->
+  <div class="store-header">
+    <div class="logo-area">
+      <h1><i class="fas fa-skull"></i> KAIZYE STORE</h1>
+      <p>PREMIUM FILE CHEAT & TOOLS | REAL BEST SELLER</p>
+    </div>
+    <div class="profile-wrapper">
+      <div class="rotating-ring"></div>
+      <img class="profile-img" src="https://img2.pixhost.to/images/7564/720786857_image.jpg" alt="profile">
+    </div>
+  </div>
+
+  <!-- MENU TERPISAH (NAVIGASI BERBAGAI HALAMAN) -->
+  <div class="nav-menu">
+    <button class="nav-btn active" data-page="pageBestSeller"><i class="fas fa-crown"></i> BEST SELLER</button>
+    <button class="nav-btn" data-page="pageAnomali"><i class="fas fa-dragon"></i> ANOMALI</button>
+    <button class="nav-btn" data-page="pageHeadlock"><i class="fas fa-bullseye"></i> HEADLOCK</button>
+    <button class="nav-btn" data-page="pageBodylock"><i class="fas fa-hand-fist"></i> BODY LOCK</button>
+    <button class="nav-btn" data-page="pageDrag"><i class="fas fa-dragon"></i> EZ DRAG & DRAG HS</button>
+    <button class="nav-btn" data-page="pageAimlock"><i class="fas fa-crosshairs"></i> AIMLOCK VIP</button>
+    <button class="nav-btn" data-page="pageAllTab"><i class="fas fa-layer-group"></i> ALL TAB / ONETAP</button>
+    <button class="nav-btn" data-page="pageAimbot"><i class="fas fa-robot"></i> AIMBOT VIP</button>
+    <button class="nav-btn" data-page="pageHolo"><i class="fas fa-gem"></i> HOLOGRAM</button>
+    <button class="nav-btn" data-page="pageLain"><i class="fas fa-archive"></i> LAINNYA + FREE</button>
+  </div>
+
+  <div class="pages-container">
+    <!-- BEST SELLER PAGE -->
+    <div id="pageBestSeller" class="page active-page">
+      <h2><i class="fas fa-fire"></i> 🔥 FILE BEST SELLER 🔥</h2>
+      <div class="product-grid" id="gridBestSeller"></div>
+    </div>
+    <div id="pageAnomali" class="page"><h2><i class="fas fa-eye"></i> FILES ANOMALI 🥶</h2><div class="product-grid" id="gridAnomali"></div></div>
+    <div id="pageHeadlock" class="page"><h2><i class="fas fa-head-side-vr"></i> HEADLOCK PRO</h2><div class="product-grid" id="gridHeadlock"></div></div>
+    <div id="pageBodylock" class="page"><h2><i class="fas fa-lock"></i> BODY LOCK [KUNCI BADAN]</h2><div class="product-grid" id="gridBodylock"></div></div>
+    <div id="pageDrag" class="page"><h2><i class="fas fa-tachometer-alt"></i> EZ DRAG & DRAG HS</h2><div class="product-grid" id="gridDrag"></div></div>
+    <div id="pageAimlock" class="page"><h2><i class="fas fa-crosshairs"></i> AIMLOCK & AIMLOCK VIP</h2><div class="product-grid" id="gridAimlock"></div></div>
+    <div id="pageAllTab" class="page"><h2><i class="fas fa-tablet-alt"></i> ALL TAB / ONE TAB</h2><div class="product-grid" id="gridAllTab"></div></div>
+    <div id="pageAimbot" class="page"><h2><i class="fas fa-bolt"></i> AIMBOT VVIP GACOR</h2><div class="product-grid" id="gridAimbot"></div></div>
+    <div id="pageHolo" class="page"><h2><i class="fas fa-magic"></i> HOLOGRAM 3D PREMIUM</h2><div class="product-grid" id="gridHolo"></div></div>
+    <div id="pageLain" class="page"><h2><i class="fas fa-gift"></i> YTTA, PAYMENT, FREE SHARE</h2><div class="product-grid" id="gridLain"></div></div>
+  </div>
+
+  <!-- CHAT OTOMATIS dengan nama file & harga -->
+  <div class="chat-section">
+    <div class="chat-title"><i class="fab fa-whatsapp"></i> Chat Otomatis - Beli File</div>
+    <div class="chat-box" id="chatBox">
+      <div class="message bot-msg">🤖 Bot Store: Halo! Ketik nama file yang ingin dibeli + harga akan otomatis terdeteksi. Contoh: "AIM LOCK BEST SELLER"</div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Tulis nama file / tanya harga...">
+      <button id="sendChatBtn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+    <div style="font-size:12px; margin-top:12px; display: flex; justify-content: space-between;">
+      <span><i class="fab fa-whatsapp"></i> ORDER VIA WA: <a href="https://wa.me/628817789861?text=ASSALAMUALAIKUM+MIN+MAU+BUY+FILE" target="_blank" style="color:#3b82f6;">Klik disini</a></span>
+      <span><i class="fas fa-credit-card"></i> GOPAY | DANA | SHOPEEPAY | QRIS | BT AKUN FF</span>
+    </div>
+  </div>
+  <footer>© KAIZYE STORE REAL • ADMIN HANYA MENGIRIM 1X • FREE UPDATE VERSI BERIKUTNYA</footer>
+</div>
+
+<script>
+  // ---------- DATA PRODUK LENGKAP BERDASARKAN LIST ----------
+  const products = {
+    bestSeller: [
+      { name: "AIM LOCK BEST SELLER", price: 5000, oldPrice: 8000, desc: "Best seller aimlock" },
+      { name: "AIMBOT SUPER V1", price: 5000, oldPrice: 8000, desc: "Gacor headshot" },
+      { name: "AIMBOT SUPER V2", price: 10000, oldPrice: 15000, desc: "V2 lebih stabil" }
+    ],
+    anomali: [
+      { name: "AIMLOCK ANOMALI", price: 5000, oldPrice: 8000, desc: "Anomali best" },
+      { name: "AIMBOT ANOMALI", price: 5000, oldPrice: 8000, desc: "powerful aim" },
+      { name: "ANOMALI FILES 🥶", price: 15000, oldPrice: 25000, desc: "special anomali" }
+    ],
+    headlock: [
+      { name: "HEADLOCK 65%", price: 10000, oldPrice: 15000 }, { name: "HEADLOCK 85%", price: 15000, oldPrice: 20000 },
+      { name: "HEADLOCK 90%", price: 25000, oldPrice: 30000 }, { name: "HEADLOCK 65% + HOLO BLUE", price: 20000, oldPrice: 35000 },
+      { name: "HEADLOCK 100% V1", price: 35000, oldPrice: 45000 }, { name: "HEADLOCK 100% V2", price: 45000, oldPrice: 65000 },
+      { name: "HEADLOCK ANOMALI", price: 50000, oldPrice: 70000 }
+    ],
+    bodylock: [
+      { name: "BODY LOCK 30%", price: 30000, oldPrice: 30000 }, { name: "BODY LOCK 50%", price: 50000, oldPrice: 50000 },
+      { name: "BODY LOCK 80%", price: 80000, oldPrice: 80000 }, { name: "BODY LOCK 100%", price: 100000, oldPrice: 100000 }
+    ],
+    drag: [
+      { name: "EZ DRAG 2.0", price: 10000, oldPrice: 15000 }, { name: "EZ DRAG 2.1", price: 15000, oldPrice: 25000 },
+      { name: "EZ DRAG 2.3", price: 20000, oldPrice: 40000 }, { name: "EZ DRAG 2.10", price: 50000, oldPrice: 65000 },
+      { name: "EZ DRAG VIP", price: 25000, oldPrice: 35000 }, { name: "DRAG HS 40%", price: 10000, oldPrice: 15000 },
+      { name: "DRAG HS 60%", price: 15000, oldPrice: 20000 }, { name: "DRAG HS 70%", price: 20000, oldPrice: 25000 },
+      { name: "DRAG HS 80%", price: 25000, oldPrice: 30000 }, { name: "DRAG HS 90%", price: 30000, oldPrice: 35000 },
+      { name: "DRAG HS 100% V1", price: 40000, oldPrice: 45000 }, { name: "DRAG HS 100% V2", price: 50000, oldPrice: 55000 },
+      { name: "DRAG HS 100% V3", price: 60000, oldPrice: 70000 }, { name: "DRAG HS 100% V4", price: 70000, oldPrice: 80000 }
+    ],
+    aimlock: [
+      { name: "AIM LOCK 80%", price: 20000, oldPrice: 40000 }, { name: "AIM LOCK 90%", price: 40000, oldPrice: 55000 },
+      { name: "AIM LOCK 100% V1", price: 60000, oldPrice: 75000 }, { name: "AIM LOCK 100% V2", price: 70000, oldPrice: 90000 },
+      { name: "AIM LOCK 100% V3", price: 80000, oldPrice: 100000 }, { name: "AIMLOCK 80% VIP", price: 20000, oldPrice: 45000 },
+      { name: "AIMLOCK 97% VIP", price: 50000, oldPrice: 65000 }, { name: "AIMLOCK 100% VIP", price: 60000, oldPrice: 75000 },
+      { name: "AIMLOCK 100% V1 VIP", price: 70000, oldPrice: 85000 }, { name: "AIMLOCK 100% V2 VIP", price: 80000, oldPrice: 95000 },
+      { name: "AIMLOCK 100% V3 VIP", price: 90000, oldPrice: 110000 }
+    ],
+    allTab: [
+      { name: "ALL TAB HEADSYOT V2 FF MAX", price: 25000, oldPrice: 35000 }, { name: "ONE TAB GOOD V1", price: 20000, oldPrice: 35000 },
+      { name: "ONE TAB GOOD V2", price: 30000, oldPrice: 45000 }, { name: "ONE TAB HS", price: 75000, oldPrice: 90000 }
+    ],
+    aimbot: [
+      { name: "AIMBOT SUPER V1", price: 5000, oldPrice: 10000 }, { name: "AIMBOT SUPER V2", price: 10000, oldPrice: 15000 },
+      { name: "AIMBOT LEGIT V1", price: 5000, oldPrice: 10000 }, { name: "AIMBOT LEGIT V2", price: 10000, oldPrice: 15000 },
+      { name: "AIMBOT LEGIT V3", price: 15000, oldPrice: 20000 }, { name: "AIMBOT LEGIT V4", price: 20000, oldPrice: 25000 },
+      { name: "LOCK HEAD VIP", price: 35000, oldPrice: 50000 }, { name: "AIM BOT + EXP", price: 65000, oldPrice: 75000 },
+      { name: "AIM BOT 100% V3", price: 45000, oldPrice: 55000 }, { name: "AIM BOT 100% NO DRAG HS", price: 150000, oldPrice: 200000 },
+      { name: "AIM BOT 80% + NPC", price: 80000, oldPrice: 100000 }, { name: "NPC NAME ONLY", price: 35000, oldPrice: 40000 },
+      { name: "AIMBOT 100% + NPC NAME", price: 200000, oldPrice: 230000 }
+    ],
+    holo: [
+      { name: "HOLOGRAM 3D ALL CHAR", price: 35000, oldPrice: 45000 }, { name: "HOLO BLUE V2", price: 25000, oldPrice: 35000 },
+      { name: "HOLO GREEN", price: 15000, oldPrice: 25000 }, { name: "HOLO SABER", price: 25000, oldPrice: 35000 },
+      { name: "HOLO PREMIUM", price: 35000, oldPrice: 50000 }
+    ],
+    lain: [
+      { name: "FILE GENOS 90%", price: 20000, oldPrice: 30000 }, { name: "FILE GENOS 100%", price: 25000, oldPrice: 35000 },
+      { name: "FILE AIM LOCK X ANTI LAG", price: 15000, oldPrice: 25000 }, { name: "GLOWAL MAKRO", price: 15000, oldPrice: 20000 },
+      { name: "MB 600%", price: 50000, oldPrice: 80000 }, { name: "GRAFIK MINICKRAFT ALL MAP", price: 20000, oldPrice: 30000 },
+      { name: "PELICIN LAYAR || KAIZYE STORE REAL", price: 10000, oldPrice: 15000 }, 
+      { name: "FREE CHANNEL SHARE", price: 0, oldPrice: 0, desc: "GRATIS: https://whatsapp.com/channel/0029VbCdJuNDZ4LT4arD1H3v" },
+      { name: "TESTY FREE", price: 0, oldPrice: 0, desc: "https://whatsapp.com/channel/0029Vb72gOz4dTnLFa0Gen0G" }
+    ]
+  };
+
+  function renderGrid(containerId, productArray) {
+    const container = document.getElementById(containerId);
+    if(!container) return;
+    container.innerHTML = '';
+    productArray.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.innerHTML = `
+        <div class="product-title">
+          <span>${p.name}</span>
+          <span><span class="price-old">${p.oldPrice ? 'Rp' + p.oldPrice.toLocaleString() : ''}</span> <span class="price-new">Rp${p.price.toLocaleString()}</span></span>
+        </div>
+        <div class="product-desc">${p.desc || 'File premium Kaizye Store, auto update.'}</div>
+        <button class="order-btn" data-name="${p.name}" data-price="${p.price}"><i class="fab fa-whatsapp"></i> BELI FILE</button>
+      `;
+      container.appendChild(card);
+    });
+    // event listener setelah render
+    document.querySelectorAll('.order-btn').forEach(btn => {
+      btn.removeEventListener('click', buyHandler);
+      btn.addEventListener('click', buyHandler);
+    });
+  }
+
+  function buyHandler(e) {
+    const name = e.currentTarget.getAttribute('data-name');
+    const price = parseInt(e.currentTarget.getAttribute('data-price'));
+    addChatMessage(`Saya ingin beli: ${name} (Rp${price.toLocaleString()})`, 'user');
+    const waMsg = `HALO MIN, MAU BELI FILE ${encodeURIComponent(name)} dengan harga Rp${price.toLocaleString()}. Terima kasih.`;
+    window.open(`https://wa.me/628817789861?text=${waMsg}`, '_blank');
+    addChatMessage(`✅ Link order WhatsApp telah dibuka. Konfirmasi pembayaran ya!`, 'bot');
+  }
+
+  // render semua halaman
+  renderGrid('gridBestSeller', products.bestSeller);
+  renderGrid('gridAnomali', products.anomali);
+  renderGrid('gridHeadlock', products.headlock);
+  renderGrid('gridBodylock', products.bodylock);
+  renderGrid('gridDrag', products.drag);
+  renderGrid('gridAimlock', products.aimlock);
+  renderGrid('gridAllTab', products.allTab);
+  renderGrid('gridAimbot', products.aimbot);
+  renderGrid('gridHolo', products.holo);
+  renderGrid('gridLain', products.lain);
+
+  // navigasi menu terpisah
+  const navBtns = document.querySelectorAll('.nav-btn');
+  const pages = document.querySelectorAll('.page');
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pageId = btn.getAttribute('data-page');
+      navBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      pages.forEach(page => page.classList.remove('active-page'));
+      const activePage = document.getElementById(pageId);
+      if(activePage) activePage.classList.add('active-page');
+    });
+  });
+
+  // ----- CHAT OTOMATIS (nama file & harga) -----
+  const chatBox = document.getElementById('chatBox');
+  const chatInput = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('sendChatBtn');
+
+  function addChatMessage(text, sender = 'bot') {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `message ${sender === 'user' ? 'user-msg' : 'bot-msg'}`;
+    msgDiv.innerHTML = sender === 'user' ? `<i class="fas fa-user"></i> ${text}` : `<i class="fas fa-robot"></i> ${text}`;
+    chatBox.appendChild(msgDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function findProductByKeyword(keyword) {
+    const allProducts = [...products.bestSeller, ...products.anomali, ...products.headlock, ...products.bodylock, ...products.drag, ...products.aimlock, ...products.allTab, ...products.aimbot, ...products.holo, ...products.lain];
+    const lowerKeyword = keyword.toLowerCase();
+    let found = null;
+    for(let prod of allProducts) {
+      if(prod.name.toLowerCase().includes(lowerKeyword) || lowerKeyword.includes(prod.name.toLowerCase().split(' ')[0])) {
+        found = prod;
+        break;
+      }
+    }
+    // fallback jika cocok dengan kata kunci tertentu 
+    if(!found && (keyword.toLowerCase().includes('headlock') || keyword.toLowerCase().includes('aim') || keyword.toLowerCase().includes('drag'))) {
+      const maybe = allProducts.find(p => p.name.toLowerCase().includes(keyword.toLowerCase().split(' ')[0]));
+      if(maybe) found = maybe;
+    }
+    return found;
+  }
+
+  function processChat(userText) {
+    if(userText.trim() === "") return;
+    addChatMessage(userText, 'user');
+    const lower = userText.toLowerCase();
+    if(lower.includes('hi') || lower.includes('halo') || lower === 'assalamualaikum') {
+      addChatMessage("Wa'alaikumsalam! Selamat datang di KAIZYE STORE. Ketik nama file yang ingin dibeli, contoh: 'AIM LOCK BEST SELLER' atau 'HOLO BLUE V2'", 'bot');
+      return;
+    }
+    const product = findProductByKeyword(userText);
+    if(product) {
+      let priceText = product.price === 0 ? "GRATIS" : `Rp${product.price.toLocaleString()}`;
+      addChatMessage(`📁 Ditemukan: ${product.name} | Harga: ${priceText} ${product.oldPrice ? `(sebelumnya Rp${product.oldPrice.toLocaleString()})` : ''}. Ketik 'beli ${product.name}' untuk order via WhatsApp.`, 'bot');
+      if(lower.includes('beli') || lower.includes('order') || lower.includes('buy')) {
+        const waLink = `https://wa.me/628817789861?text=HALO%20MIN%2C%20SAYA%20MAU%20BELI%20${encodeURIComponent(product.name)}%20harga%20${product.price}`;
+        addChatMessage(`🛒 Silahkan klik link berikut untuk order: ${waLink} (buka WhatsApp)`, 'bot');
+        window.open(waLink, '_blank');
+      }
+    } else {
+      addChatMessage("Maaf, file tidak ditemukan. Coba ketik ulang nama file yang tersedia misal: 'HEADLOCK 85%', 'EZ DRAG 2.3', atau lihat menu di atas. Cek daftar lengkap di setiap kategori.", 'bot');
+    }
+  }
+
+  sendBtn.addEventListener('click', () => {
+    const msg = chatInput.value.trim();
+    if(msg) processChat(msg);
+    chatInput.value = '';
+  });
+  chatInput.addEventListener('keypress', (e) => {
+    if(e.key === 'Enter') {
+      sendBtn.click();
+    }
+  });
+  // tambahkan welcome
+  setTimeout(() => {
+    addChatMessage("💬 Tips: Tulis nama file persis (tanpa harga), bot akan mendeteksi harga dan membantu order!", 'bot');
+  }, 1000);
+</script>
+</body>
+</html>
